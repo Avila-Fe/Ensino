@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+
+    <h:head>
+        <title>Manutencao de Alunos</title>
+    </h:head>
+
+    <h:body>
+        <h:form id="formTabela">
+            <p:commandButton value="Novo Aluno"
+                             action="#{alunoControle.preparaIncluir()}"
+                             />
+            <p:commandButton value="Atualizar"
+                             action="#{alunoControle.atualizaLista()}"
+                             update="tabela"
+                             />
+            <p:dataTable id="tabela" 
+                         value="#{alunoControle.lista}"
+                         var="al">
+
+                <p:column headerText="Nome do Aluno">
+                    <h:outputLabel value="#{al.nome}"/>
+                </p:column>
+                <p:column headerText="Data Nascimento">
+                    <h:outputLabel value="#{al.dataNasc}">
+                        <f:convertDateTime pattern="dd.MM.  yyyy"/>
+                    </h:outputLabel>
+                </p:column>
+
+                <p:column headerText="Opções" >
+
+                    <p:commandButton oncomplete="PF('cd').show()" icon="ui-icon-trash">
+                        <f:setPropertyActionListener target="#{alunoControle.aluno}" value="#{al}"/>
+                    </p:commandButton>
+
+                    <p:commandButton icon="ui-icon-pencil"
+                                     action="#{alunoControle.preparaAlterar()}"
+                                     >
+                        <f:setPropertyActionListener target="#{alunoControle.aluno}" value="#{al}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h1></h1>
+        <p:commandButton value="Novo"
+                         action="#{alunoControle.preparaIncluir()}"
+                         />
+
+        <p:confirmDialog closeOnEscape="true" showEffect="fade" hideEffect="fade" message="Você realmente deseja deletar este animal?" 
+                         header="Você tem certeza desta operação?" severity="alert" widgetVar="cd">
+            <h:form id="formPainelCD" enctype="multipart/form-data">                    
+                <p:commandButton value="Sim" actionListener="#{alunoControle.excluir()}"
+                                 update=":formTabela" onclick="PF('cd').hide()"/>
+                <p:commandButton value="Não" onclick="PF('cd').hide()"/>
+            </h:form>                    
+        </p:confirmDialog>
+    </h:body>
+</html>

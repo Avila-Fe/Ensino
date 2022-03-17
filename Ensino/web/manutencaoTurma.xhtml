@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+
+    <h:head>
+        <title>Manutencao de Turma</title>
+    </h:head>
+
+    <h:body>
+        <h:form id="formTabela">
+            <p:commandButton value="Voltar" action="manutencaoEscola.xhtml?faces-redirect=true"/>
+            <!--            <p:commandButton value="Atualizar"
+                                         action="{animalControle.atualizaLista(fazenda)}"
+                                         update="tabela"
+                                         /> -->
+            <p:commandButton value="Nova Turma"
+                             action="#{turmaControle.preparaIncluir()}"
+                             />
+            <h1></h1>
+            <p:dataTable id="tabela" 
+                         value="#{turmaControle.lista}"
+                         var="tur">
+
+                <p:column headerText="Nome da Turma">
+                    <h:outputLabel value="#{tur.nomeTurma}"/>
+                </p:column>
+                <p:column headerText="Capacidade de Alunos">
+                    <h:outputLabel value="#{tur.capacidade}"/>
+                </p:column>
+
+                <p:column headerText="Opções" >                 
+
+                    <p:commandButton oncomplete="PF('cd').show()" icon="ui-icon-trash">
+                        <f:setPropertyActionListener target="#{turmaControle.turma}" value="#{tur}"/>
+                    </p:commandButton>
+
+                    <p:commandButton icon="ui-icon-pencil"
+                                     action="#{turmaControle.preparaAlterar()}"
+                                     >
+                      
+                        <f:setPropertyActionListener target="#{turmaControle.turma}" value="#{tur}"/>
+                    </p:commandButton>
+                        <p:commandButton value="Alunos"
+                                     action="manutencaoAluno.xhtml?faces-redirect=true"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h1></h1>
+        <p:commandButton value="Nova Turma"
+                         action="#{turmaControle.preparaIncluir()}"
+                         />
+
+        <p:confirmDialog closeOnEscape="true" showEffect="fade" hideEffect="fade" message="Você realmente deseja deletar esta turma?" 
+                         header="Você tem certeza desta operação?" severity="alert" widgetVar="cd">
+            <h:form id="formPainelCD" enctype="multipart/form-data">                    
+                <p:commandButton value="Sim" actionListener="#{turmaControle.excluir()}"
+                                 update=":formTabela" onclick="PF('cd').hide()"/>
+                <p:commandButton value="Não" onclick="PF('cd').hide()"/>
+            </h:form>                    
+        </p:confirmDialog>
+    </h:body>
+</html>

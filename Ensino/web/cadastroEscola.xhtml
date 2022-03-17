@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+      
+    <h:head>
+        <title>Cadastro de Escola</title>
+    </h:head>
+    
+    <h:body>
+       <h:form id="freeTabela">
+           <p:commandButton value="Voltar" 
+                            action="manutencaoEscola.xhtml?faces-redirect=true"/>
+
+            <p:panelGrid columns="2">
+            <p:outputLabel value="Nome da Escola:"/>
+            <p:inputText value="#{escolaControle.escola.nomeEscola}"/>
+            
+            <p:outputLabel value="Logradouro:"/>
+            <p:inputText value="#{escolaControle.escola.logradouro}"/>
+                 
+            <p:outputLabel value="Complemento:"/>
+            <p:inputText value="#{escolaControle.escola.complemento}"/>
+                
+            <p:outputLabel value="Bairro:"/>
+            <p:inputText value="#{escolaControle.escola.bairro}"/>  
+            
+            <p:outputLabel value="Cidade:"/>
+            <p:inputText value="#{escolaControle.escola.cidade}"/>
+            
+            <p:outputLabel value="Estado:"/>
+            <p:inputText value="#{escolaControle.escola.estado}"/>
+            </p:panelGrid>
+           
+            <p:commandButton value="Salvar" icon="ui-icon-check"
+                             action="#{escolaControle.salvar()}"/>
+        </h:form>
+    </h:body>
+</html>
